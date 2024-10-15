@@ -1,0 +1,9 @@
+numpy
+pandas
+scikit-learn
+tensorflow
+transformers
+pyspark
+kafka-python
+matplotlib
+seaborn

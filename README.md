@@ -38,3 +38,42 @@ The system architecture consists of the following components:
 6. Integration Layer: Connects the model serving APIs with email systems for real-time detection.
 7. Monitoring and Updates: Monitors system performance and updates models as needed.
 
+
+Technologies Used
+
+Programming Language: Python
+Big Data Technologies:
+Apache Kafka
+Apache Spark
+Hadoop HDFS
+HBase or Cassandra
+
+Machine Learning Frameworks:
+TensorFlow
+PyTorch
+TensorFlowOnSpark
+
+NLP Libraries:
+Hugging Face Transformers
+NLTK
+spaCy
+Model Deployment:
+TensorFlow Serving
+TorchServe
+
+API Development:
+Flask
+FastAPI
+
+Containerization and Orchestration:
+Docker
+Kubernetes
+
+Monitoring Tools:
+Prometheus
+Grafana
+
+Logging and Visualization:
+ELK Stack (Elasticsearch, Logstash, Kibana)
+TensorBoard
+
