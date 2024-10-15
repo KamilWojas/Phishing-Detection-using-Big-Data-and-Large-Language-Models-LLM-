@@ -34,7 +34,7 @@ The system architecture consists of the following components:
 2. Data Storage: Stores emails in a distributed file system (HDFS) and NoSQL databases like HBase or Cassandra.
 3. Data Processing: Processes and cleans data using Apache Spark, preparing it for model training and inference.
 4. Model Training: Trains LLMs using TensorFlowOnSpark or PyTorch with Spark for distributed training.
-5 .Model Serving: Deploys models using TensorFlow Serving or TorchServe, accessible via RESTful APIs.
+5. Model Serving: Deploys models using TensorFlow Serving or TorchServe, accessible via RESTful APIs.
 6. Integration Layer: Connects the model serving APIs with email systems for real-time detection.
 7. Monitoring and Updates: Monitors system performance and updates models as needed.
 
