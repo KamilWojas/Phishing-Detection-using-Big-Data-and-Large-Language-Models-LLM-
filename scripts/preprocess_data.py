@@ -20,6 +20,7 @@ for root, dirs, files in os.walk(data_dir):
                 # Ustal etykietę na podstawie nazwy folderu lub innego kryterium
                 labels.append(0)  # 0 - nie-phishing, 1 - phishing
 
+
 # Utworzenie DataFrame
 df = pd.DataFrame({'email': emails, 'label': labels})
 
