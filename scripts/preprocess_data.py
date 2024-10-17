@@ -1,29 +1,38 @@
-import os
 import pandas as pd
-import numpy as np
 import re
 
-# Ścieżka do folderu z danymi
-data_dir = 'data/enron'
+# Ścieżka do pliku CSV z danymi
+csv_file = 'data/emails.csv'
 
-# Lista do przechowywania e-maili i etykiet
-emails = []
-labels = []
+# Wczytaj dane z pliku CSV
+data = pd.read_csv(csv_file)
 
-# Przykład wczytywania e-maili z folderu
-for root, dirs, files in os.walk(data_dir):
-    for file in files:
-        if file.endswith('.txt'):
-            with open(os.path.join(root, file), 'r', encoding='latin1') as f:
-                email = f.read()
-                emails.append(email)
-                # Ustal etykietę na podstawie nazwy folderu lub innego kryterium
-                labels.append(0)  # 0 - nie-phishing, 1 - phishing
+# Wyświetl kilka pierwszych wierszy, aby zobaczyć strukturę danych
+print(data.head())
 
+# Zakładamy, że w kolumnie 'message' mamy tekst e-maili, a w 'label' mamy etykiety
+if 'message' in data.columns and 'label' in data.columns:
+    emails = data['message']
+    labels = data['label']
+else:
+    raise ValueError("Nie znaleziono wymaganych kolumn w pliku CSV")
 
+# Funkcja czyszcząca tekst e-maili
+def clean_text(text):
+    text = re.sub(r'\S+@\S+', '', text)  # usuń adresy e-mail
+    text = re.sub(r'http\S+', '', text)  # usuń linki
+    text = re.sub(r'\d+', '', text)  # usuń cyfry
+    text = re.sub(r'[^A-Za-z\s]', '', text)  # usuń znaki specjalne
+    text = text.lower()  # zamień na małe litery
+    return text
 
-# Utworzenie DataFrame
-df = pd.DataFrame({'email': emails, 'label': labels})
+# Przetwarzanie tekstów e-maili
+emails_cleaned = emails.apply(clean_text)
 
-# Zapisanie do pliku CSV
-df.to_csv('data/emails.csv', index=False)
+# Dodaj nową kolumnę do danych z przetworzonymi e-mailami
+data['message_cleaned'] = emails_cleaned
+
+# Zapisz przetworzone dane do nowego pliku CSV
+data.to_csv('data/emails_processed.csv', index=False)
+
+print("Przetwarzanie zakończone. Dane zapisane w 'data/emails_processed.csv'.")
