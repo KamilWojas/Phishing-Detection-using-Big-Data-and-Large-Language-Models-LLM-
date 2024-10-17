@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-# Ścieżka do pliku CSV z danymi
+# Ścieżka do pliku CSV z surowymi danymi
 csv_file = 'data/emails.csv'
 
 # Wczytaj dane z pliku CSV
@@ -10,12 +10,13 @@ data = pd.read_csv(csv_file)
 # Wyświetl kilka pierwszych wierszy, aby zobaczyć strukturę danych
 print(data.head())
 
-# Zakładamy, że w kolumnie 'message' mamy tekst e-maili, a w 'label' mamy etykiety
-if 'message' in data.columns and 'label' in data.columns:
+# Zakładamy, że w kolumnie 'message' mamy tekst e-maili, ale brakuje 'label'
+if 'message' in data.columns:
     emails = data['message']
-    labels = data['label']
+    # Dodaj kolumnę 'label', zakładając, że wszystkie wiadomości są nie-phishingowe (label = 0)
+    labels = [0] * len(emails)
 else:
-    raise ValueError("Nie znaleziono wymaganych kolumn w pliku CSV")
+    raise ValueError("Nie znaleziono kolumny 'message' w pliku CSV")
 
 # Funkcja czyszcząca tekst e-maili
 def clean_text(text):
@@ -29,8 +30,9 @@ def clean_text(text):
 # Przetwarzanie tekstów e-maili
 emails_cleaned = emails.apply(clean_text)
 
-# Dodaj nową kolumnę do danych z przetworzonymi e-mailami
+# Dodaj nową kolumnę do danych z przetworzonymi e-mailami i etykietami
 data['message_cleaned'] = emails_cleaned
+data['label'] = labels  # Dodanie kolumny z etykietami
 
 # Zapisz przetworzone dane do nowego pliku CSV
 data.to_csv('data/emails_processed.csv', index=False)
